@@ -143,5 +143,5 @@ This program uses salePrice instead of normalPrice to make this search because C
 1. Make a call to the API using userInput as the steamAppID parameter
 1. put the returned JSON in result
 1. print "Search result:"
-1. result.printGame();
+1. result.printGame();\
 All of these search methods will additionally use the parameter storeID = 1 (to only return games on Steam) to prevent duplicates and also to make sure all results have a steamAppID.
