@@ -89,7 +89,31 @@ GameNode o--> Game
 ## GameStore class
 ## User class
 ## GameLL class
+### void add(Game game)
+Adds a new GameNode containing a Game to the beginning of the list
+1. GameNode node = new GameNode(game);
+1. if (this.head == null)
+    1. head = node;
+1. else
+    1. node.setNext(head);
+    1. head = node;
+1. end if
+### void remove(Game game)
+1. GameNode currentNode = head;
+1. GameNode previous = null;
+1. while currentNode's game doesn't match game
+    1. previous = currentNode;
+    1. currentNode = currentNode.getNext();
+1. end while
+1. previous.setNext(currentNode.getNext());
+### void printGames()
+1. GameNode currentNode = head;
+1. while (currentNode != null)
+    1. currentNode.getGame().printGame();
+    1. currentNode = currentNode.getNext();
+1. end while
 ## GameNode class
+Acts as a sort of wrapper class between GameLL and Game. An instance of GameNode contains a Game instance (game), data for the next GameNode (next), and getters and setters for both. Null-parameter constructor sets both game and next to null, single-parameter constructor takes an instance of Game and passes it to game.
 ## Game class
 All data is read from JSON
 ### void printGame()
