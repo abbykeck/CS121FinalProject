@@ -182,15 +182,7 @@ Adds a new GameNode containing a Game to the beginning of the list
 1. end while
 ## GameNode class
 Implements Serializable\
-Acts as a sort of wrapper class between GameLL and Game. An instance of GameNode contains a Game instance (game), data for the next GameNode (next), and getters and setters for both. Null-parameter constructor sets both game and next to null, single-parameter constructor takes an instance of Game and passes it to game.
-## Game class
-Implements Serializable\
-All data is read from JSON
-### void printGame()
-1. print "Game title: " + title
-1. print "Price: $" + salePrice
-1. print "Ratings: \"" + steamRatingText + "\" " + steamRatingPercent + "%"
-1. print "Game ID:" + steamAppID + "\n"
+Acts as a sort of wrapper class between GameLL and Game. Additionally handles API to make an instance of Game. An instance of GameNode contains a Game instance (game), data for the next GameNode (next), and getters and setters for both. Null-parameter constructor sets both game and next to null, single-parameter constructor takes an instance of Game and passes it to game.\
 ### static void searchByTitle()
 1. ArrayList<Game> games = new ArrayList<Game>();
 1. Scanner input = new Scanner(System.in);
@@ -202,6 +194,7 @@ All data is read from JSON
 1. print "Search results:"
 1. for every Game in games
     1. game.printGame()
+1. end for
 ### static void searchByRatings()
 1. ArrayList<Game> games = new ArrayList<Game>();
 1. Scanner input = new Scanner(System.in);
@@ -213,6 +206,7 @@ All data is read from JSON
 1. print "Search results:"
 1. for every Game in games
     1. game.printGame()
+1. end for
 ### static void searchByPrice()
 This program uses salePrice instead of normalPrice to make this search because CheapShark returns results based on salePrice.
 1. ArrayList<Game> games = new ArrayList<Game>();
@@ -228,6 +222,7 @@ This program uses salePrice instead of normalPrice to make this search because C
 1. print "Search results:"
 1. for every Game in games
     1. game.printGame()
+1. end for
 ### static void searchForGame()
 1. Game result = new Game();
 1. Scanner input = new Scanner(System.in);
@@ -239,3 +234,11 @@ This program uses salePrice instead of normalPrice to make this search because C
 1. print "Search result:"
 1. result.printGame();\
 All of these search methods will additionally use the parameter storeID = 1 (to only return games on Steam) to prevent duplicates and also to make sure all results have a steamAppID.
+## Game class (in GameNode.java)
+Implements Serializable\
+Data is read from JSON
+### void printGame()
+1. print "Game title: " + title
+1. print "Price: $" + salePrice
+1. print "Ratings: \"" + steamRatingText + "\" " + steamRatingPercent + "%"
+1. print "Game ID:" + steamAppID + "\n"
