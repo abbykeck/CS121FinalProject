@@ -1,0 +1,23 @@
+[
+  {
+    "internalName": "CELESTE",
+    "title": "Celeste",
+    "metacriticLink": "/game/celeste/",
+    "dealID": "dPa6mWDMGSef4%2FAdNuQBsxOHDUbNZ3ttlethrFug6DQ%3D",
+    "storeID": "1",
+    "gameID": "177485",
+    "salePrice": "4.99",
+    "normalPrice": "19.99",
+    "isOnSale": "1",
+    "savings": "75.037519",
+    "metacriticScore": "88",
+    "steamRatingText": "Overwhelmingly Positive",
+    "steamRatingPercent": "97",
+    "steamRatingCount": "55402",
+    "steamAppID": "504230",
+    "releaseDate": 1516838400,
+    "lastChange": 1763746832,
+    "dealRating": "7.6",
+    "thumb": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/504230/capsule_231x87.jpg?t=1714089525"
+  }
+]
