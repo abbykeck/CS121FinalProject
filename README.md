@@ -181,10 +181,10 @@ Adds a new GameNode containing a Game to the beginning of the list
     1. currentNode = currentNode.getNext();
 1. end while
 ## GameNode class
-Implements Serializable
+Implements Serializable\
 Acts as a sort of wrapper class between GameLL and Game. An instance of GameNode contains a Game instance (game), data for the next GameNode (next), and getters and setters for both. Null-parameter constructor sets both game and next to null, single-parameter constructor takes an instance of Game and passes it to game.
 ## Game class
-Implements Serializable
+Implements Serializable\
 All data is read from JSON
 ### void printGame()
 1. print "Game title: " + title

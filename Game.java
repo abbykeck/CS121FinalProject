@@ -2,7 +2,7 @@ import java.util.*;
 import java.net.*;
 import java.io.*;
 
-public class Game {
+public class Game implements Serializable {
 	private String internalName;
 	private String title;
 	private String metacriticLink;
@@ -22,6 +22,8 @@ public class Game {
 	private int lastChange;
 	private String dealRating;
 	private String thumb;
+
+	private static final long SerialVersionUID = 1L;
 
 	public void printGame() {
 		System.out.println("Game title: " + title);
