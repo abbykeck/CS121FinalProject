@@ -87,8 +87,76 @@ GameNode o--> Game
 ```
 # Algorithm for GameStore project
 ## GameStore class
+### GameStore() constructor
+1. loadUserInfo();
+1. user.start();
+1. saveUserInfo();
+### void saveUserInfo()
+Saves the instance of User to user.dat
+### void loadUserInfo()
+Loads the User object in user.dat and puts it in user
 ## User class
+Implements Serializable
+### String getBalanceString()
+1. String result = String.format("$%.2f", balance)
+1. return result;
+### boolean login()
+1. String inputUser = "";
+1. String inputPIN = "";
+1. boolean result = false;
+1. Ask the user for a username and put it into inputUser
+1. Ask the user for a PIN and put it into inputPIN
+1. if (userName.equals(inputUser))
+    1. if (PIN.equals(inputPIN))
+        1. result = true;
+    1. end if
+1. end if
+1. return result;
+### boolean login(String userName, String PIN)
+1. if (userName.equals(inputUser))
+    1. if (PIN.equals(inputPIN))
+        1. result = true;
+    1. end if
+1. end if
+1. return result;
+### void start
+1. boolean keepGoing = true;
+1. String choice = "";
+1. while (keepGoing)
+    1. choice = this.menu();
+    1. if (choice == "0")
+        1. keepGoing = false;
+    1. else if (choice == "1")
+        1. this.checkBalance();
+    1. else if (choice == "2")
+        1. this.addBalance();
+    1. else if (choice == "3")
+        1. this.ownedGames.printGames();
+    1. else if (choice == "4")
+        1. this.searchGames();
+    1. else if (choice == "5")
+        1. this.buyGame();
+    1. else
+        1. print "invalid input, please try again"
+### String menu()
+1. String choice = ""
+1. print "User menu"
+1. print "0) Exit"
+1. print "1) Check balance"
+1. print "2) Add to balance"
+1. print "3) View owned games"
+1. print "4) Search for games"
+1. print "5) Buy a game"
+1. print "Enter your choice 0-5: "
+1. put user input into choice
+1. return choice;
+### void checkBalance()
+### void addBalance()
+### void searchGames()
+### double getDouble()
+### void buyGame()
 ## GameLL class
+Implements Serializable
 ### void add(Game game)
 Adds a new GameNode containing a Game to the beginning of the list
 1. GameNode node = new GameNode(game);
@@ -113,8 +181,10 @@ Adds a new GameNode containing a Game to the beginning of the list
     1. currentNode = currentNode.getNext();
 1. end while
 ## GameNode class
+Implements Serializable
 Acts as a sort of wrapper class between GameLL and Game. An instance of GameNode contains a Game instance (game), data for the next GameNode (next), and getters and setters for both. Null-parameter constructor sets both game and next to null, single-parameter constructor takes an instance of Game and passes it to game.
 ## Game class
+Implements Serializable
 All data is read from JSON
 ### void printGame()
 1. print "Game title: " + title
