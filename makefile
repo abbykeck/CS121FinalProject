@@ -1,5 +1,8 @@
-testGameNode: GameNode.class
-	java -cp gson-2.8.9.jar:. GameNode
+testGameLL: GameLL.class
+	java -cp gson-2.8.9.jar:. GameLL
 
-GameNode.class:
-	javac -cp gson-2.8.9.jar:. GameNode.java
+GameLL.class:
+	javac -cp gson-2.8.9.jar:. GameLL.java
+
+clean:
+	rm *.class
