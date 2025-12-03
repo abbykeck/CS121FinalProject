@@ -11,6 +11,7 @@ public class GameLL implements Serializable {
 
 	public static void main(String[] args) {
 		System.out.println("Hello world!");
+		/*
 		String json = "";
 		try {
 			File file = new File("game.txt");
@@ -25,13 +26,22 @@ public class GameLL implements Serializable {
 		// System.out.println("JSON:\n" + json);
 		GameLL gameslist = new GameLL(json);
 		gameslist.printGames();
+		*/
+		System.out.println("Search by title\n");
+		GameLL.searchByTitle();
+		System.out.println("Search by ratings\n");
+		GameLL.searchByRatings();
+		System.out.println("Search by price range\n");
+		GameLL.searchByPrice();
+		System.out.println("Search for game\n");
+		Game c = GameLL.searchForGame();
 	} // end main
 	public GameLL() {
 		this.head = null;
 	} // end constructor
 	public GameLL(String JSON) {
 		GameList games = new GameList();
-		games = parseJSON(JSON);
+		games = GameLL.parseJSON(JSON);
 		for (Game game : games.getGames()) {
 			this.add(game);
 		} // end for
@@ -89,7 +99,7 @@ public class GameLL implements Serializable {
                 return result;
         } // end readString
         */
-        public GameList parseJSON(String jsonString){
+        public static GameList parseJSON(String jsonString){
                 // Adapted from https://github.com/twopiharris/BSU-CS121/tree/main/data_API
                 GameList result;
 		jsonString = "{itemList:" + jsonString + "}";
@@ -104,7 +114,22 @@ public class GameLL implements Serializable {
 		String userInput = "";
 		System.out.print("Enter a game title (not case sensitive): ");
 		userInput = input.nextLine();
-		System.out.println("Search results:");
+		String json = "";
+                System.out.println("Search results:\n");
+                try {
+                        File file = new File("title.txt");
+                        Scanner inputFile = new Scanner(file);
+                        while (inputFile.hasNext()) {
+                                json += inputFile.nextLine();
+                        }
+                        inputFile.close();
+                } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                }
+                games = parseJSON(json);
+                for (Game game : games.getGames()) {
+                        game.printGame();
+                }
 	} // end searchByTitle
         public static void searchByRatings() {
 		GameList games = new GameList();
@@ -112,17 +137,75 @@ public class GameLL implements Serializable {
                 String userInput = "";
                 System.out.print("Enter a minimum rating (integer between 0-100): ");
                 userInput = input.nextLine();
-                System.out.println("Search results:");
+		String json = "";
+                System.out.println("Search results:\n");
+		try {
+                        File file = new File("ratings.txt");
+                        Scanner inputFile = new Scanner(file);
+                        while (inputFile.hasNext()) {
+                                json += inputFile.nextLine();
+                        }
+                        inputFile.close();
+                } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                }
+                games = parseJSON(json);
+                for (Game game : games.getGames()) {
+                        game.printGame();
+                }
 	} // end searchByRatings
         public static void searchByPrice() {
 		GameList games = new GameList();
                 Scanner input = new Scanner(System.in);
-                String userInput = "";
+                String minPrice = "";
+		String maxPrice = "";
                 System.out.print("Enter a minimum price: ");
-                userInput = input.nextLine();
-                System.out.println("Search results:");
+                minPrice = input.nextLine();
+		System.out.print("Enter a maximum price: ");
+		maxPrice = input.nextLine();
+		String json = "";
+                System.out.println("Search results:\n");
+		try {
+			File file = new File("priceRange.txt");
+                        Scanner inputFile = new Scanner(file);
+                        while (inputFile.hasNext()) {
+                                json += inputFile.nextLine();
+                        }
+                        inputFile.close();
+                } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                }
+		games = parseJSON(json);
+		for (Game game : games.getGames()) {
+			game.printGame();
+		}
 	} // end searchByPrice
-        public static void searchForGame() {} // end searchForGame
+        public static Game searchForGame() {
+		Game result = new Game();
+		GameList games = new GameList();
+		Scanner input = new Scanner(System.in);
+		String userInput = "";
+		System.out.print("Enter a game ID: ");
+		userInput = input.nextLine();
+		String json = "";
+                System.out.println("Search result:\n");
+                try {
+                        File file = new File("game.txt");
+                        Scanner inputFile = new Scanner(file);
+                        while (inputFile.hasNext()) {
+                                json += inputFile.nextLine();
+                        }
+                        inputFile.close();
+                } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                }
+                games = parseJSON(json);
+                for (Game game : games.getGames()) {
+                        game.printGame();
+			result = game;
+                }
+		return result;
+	} // end searchForGame
 } // end GameLL
 class GameNode implements Serializable {
         private Game game;
