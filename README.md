@@ -180,9 +180,6 @@ Adds a new GameNode containing a Game to the beginning of the list
     1. currentNode.getGame().printGame();
     1. currentNode = currentNode.getNext();
 1. end while
-## GameNode class
-Implements Serializable\
-Acts as a sort of wrapper class between GameLL and Game. Additionally handles API to make an instance of Game. An instance of GameNode contains a Game instance (game), data for the next GameNode (next), and getters and setters for both. Null-parameter constructor sets both game and next to null, single-parameter constructor takes an instance of Game and passes it to game.\
 ### static void searchByTitle()
 1. ArrayList<Game> games = new ArrayList<Game>();
 1. Scanner input = new Scanner(System.in);
@@ -207,7 +204,7 @@ Acts as a sort of wrapper class between GameLL and Game. Additionally handles AP
 1. for every Game in games
     1. game.printGame()
 1. end for
-### static void searchByPrice()
+## static void searchByPrice()
 This program uses salePrice instead of normalPrice to make this search because CheapShark returns results based on salePrice.
 1. ArrayList<Game> games = new ArrayList<Game>();
 1. Scanner input = new Scanner(System.in);
@@ -223,18 +220,25 @@ This program uses salePrice instead of normalPrice to make this search because C
 1. for every Game in games
     1. game.printGame()
 1. end for
-### static void searchForGame()
+### static Game searchForGame()
+Mostly for buyGame() in the User class
 1. Game result = new Game();
+1. GameList games = new GameList();
 1. Scanner input = new Scanner(System.in);
 1. String userInput = "";
 1. print "Enter a game ID: "
 1. userInput = input.nextLine();
-1. Make a call to the API using userInput as the steamAppID parameter
-1. put the returned JSON in result
+1. Make a call to the API using userInput as the steamAppID parameter (steamAppID is unique for every game so this should only return one game)
+1. put the returned JSON in games
+1. put the Game from games into result
 1. print "Search result:"
 1. result.printGame();\
-All of these search methods will additionally use the parameter storeID = 1 (to only return games on Steam) to prevent duplicates and also to make sure all results have a steamAppID.
-## Game class (in GameNode.java)
+1. return result;
+All of these search methods will additionally use the parameter storeID = 1 (to only return games on Steam) to prevent duplicates and also to make sure all results have a steamAppID, as well as pageSize = 10 to make sure the query only returns a maximum of 10 games.
+## GameNode class (in GameLL.java)
+Implements Serializable\
+Acts as a sort of wrapper class between GameLL and Game. Additionally handles API to make an instance of Game. An instance of GameNode contains a Game instance (game), data for the next GameNode (next), and getters and setters for both. Null-parameter constructor sets both game and next to null, single-parameter constructor takes an instance of Game and passes it to game.\
+## Game class (in GameLL.java)
 Implements Serializable\
 Data is read from JSON
 ### void printGame()
