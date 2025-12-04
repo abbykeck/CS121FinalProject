@@ -33,11 +33,11 @@ class User {
     + String menu()
     + void checkBalance()
     + void addBalance()
-    + void searchGames()
     - double getDouble()
+    + void searchGames()
     + void buyGame()
 }
-class Game ["Game (handles API)"]{
+class Game ["Game (API class)"]{
     - String internalName
     - String title
     - String metacriticLink
@@ -58,17 +58,19 @@ class Game ["Game (handles API)"]{
     - String dealRating
     - String thumb
     + void printGame()
-    + static void searchByTitle()
-    + static void searchByRatings()
-    + static void searchByPrice()
-    + static void searchForGame()
+    + double getPrice()
 }
-class GameLL {
+class GameLL ["GameLL (handles I/O from API)"]{
     - GameNode head
     + GameLL()
     + void add(Game game)
     + void remove(Game game)
     + void printGames()
+    + static void parseJSON(String json)
+    + static void searchByTitle()
+    + static void searchByRatings()
+    + static void searchByPrice()
+    + static void searchForGame()
 }
 class GameNode {
     - Game game
@@ -76,6 +78,7 @@ class GameNode {
     + GameNode()
     + GameNode(Game game)
     + Game getGame()
+    + void setGame(Game game)
     + GameNode getNext()
     + void setNext(GameNode next)
 }
@@ -151,10 +154,56 @@ Implements Serializable
 1. put user input into choice
 1. return choice;
 ### void checkBalance()
+1. print "Balance: " + getBalanceString()
 ### void addBalance()
-### void searchGames()
+1. print "Enter how much to add: "
+1. this.balance += getDouble();
+1. print "New balance: " + getBalanceString()
 ### double getDouble()
+private method for error handling user input
+1. Scanner input = new Scanner(System.in);
+1. String userInput = "";
+1. double result = 0.0;
+1. try
+    1. userInput = input.nextLine();
+    1. result = Double.parseDouble(userInput);
+1. catch (Exception e)
+    1. print "invalid input, please try again"
+1. return result;
+### void searchGames()
+1. Scanner input = new Scanner(System.in);
+1. String choice = "";
+1. print "Game search"
+1. print "0) Cancel search"
+1. print "1) Search by title"
+1. print "2) Search by minimum rating"
+1. print "3) Search by price"
+1. print "4) Search for a game by Game ID"
+1. choice = input.nextLine();
+1. if choice == "0", do nothing (go back to main loop)
+1. else if choice == "1"
+    1. GameLL.searchByTitle();
+1. else if choice == "2"
+    1. GameLL.searchByRating();
+1. else if choice == "3"
+    1. GameLL.searchByPrice();
+1. else if choice == "4"
+    1. Game g = GameLL.searchForGame();
+1. else
+    1. print "invalid input, please try again"
+1. end if
 ### void buyGame()
+1. Scanner input = new Scanner(System.in);
+1. String choice = "";
+1. print "Buy a game"
+1. Game g = GameLL.searchForGame();
+1. print "Do you want to buy this game? (yes/no)"
+1. choice = input.nextLine();
+1. choice = choice.toLowerCase();
+1. if (choice.equals("yes"))
+    1. balance -= g.getPrice();
+    1. ownedGames.add(g);
+1. end if
 ## GameLL class
 Implements Serializable
 ### void add(Game game)
@@ -221,12 +270,11 @@ This program uses salePrice instead of normalPrice to make this search because C
     1. game.printGame()
 1. end for
 ### static Game searchForGame()
-Mostly for buyGame() in the User class
 1. Game result = new Game();
 1. GameList games = new GameList();
 1. Scanner input = new Scanner(System.in);
 1. String userInput = "";
-1. print "Enter a game ID: "
+1. print "Enter the Game ID: "
 1. userInput = input.nextLine();
 1. Make a call to the API using userInput as the steamAppID parameter (steamAppID is unique for every game so this should only return one game)
 1. put the returned JSON in games
@@ -238,6 +286,9 @@ All of these search methods will additionally use the parameter storeID = 1 (to 
 ## GameNode class (in GameLL.java)
 Implements Serializable\
 Acts as a sort of wrapper class between GameLL and Game. Additionally handles API to make an instance of Game. An instance of GameNode contains a Game instance (game), data for the next GameNode (next), and getters and setters for both. Null-parameter constructor sets both game and next to null, single-parameter constructor takes an instance of Game and passes it to game.\
+## GameList class (in GameLL.java)
+Implements Serializable\
+Only contains a list of Games, primarily exists to handle JSON input as the CheapShark API always returns a JSON containing list of games, even if there is only a single game.
 ## Game class (in GameLL.java)
 Implements Serializable\
 Data is read from JSON
