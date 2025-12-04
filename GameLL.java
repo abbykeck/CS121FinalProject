@@ -185,7 +185,7 @@ public class GameLL implements Serializable {
 		GameList games = new GameList();
 		Scanner input = new Scanner(System.in);
 		String userInput = "";
-		System.out.print("Enter a game ID: ");
+		System.out.print("Enter the game ID: ");
 		userInput = input.nextLine();
 		String json = "";
                 System.out.println("Search result:\n");
@@ -270,4 +270,27 @@ class Game implements Serializable {
                 } // end for
 		System.out.println();
         } // end printGame
+	public double getPrice() {
+		double result = 0.0;
+		try {
+			result = Double.parseDouble(this.salePrice);
+		} catch (Exception e) {
+			System.out.println("Oops! If you're seeing this, either there was an issue with the API or I made a mistake here.");
+			System.out.println(e.getMessage());
+		} // end try
+		return result;
+	} // end getPrice
+	public boolean equals(Game other) {
+		boolean isEqual = true;
+		if (!(this.title.equals(other.title))) {
+			isEqual = false;
+		} else if (!(this.salePrice.equals(other.salePrice))) {
+			isEqual = false;
+		} else if (!(this.steamRatingPercent.equals(other.steamRatingPercent))) {
+			isEqual = false;
+		} else if (!(this.steamAppID.equals(other.steamAppID))) {
+			isEqual = false;
+		}
+		return isEqual;
+	} // end equals
 } // end game

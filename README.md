@@ -297,3 +297,5 @@ Data is read from JSON
 1. print "Price: $" + salePrice
 1. print "Ratings: \"" + steamRatingText + "\" " + steamRatingPercent + "%"
 1. print "Game ID:" + steamAppID + "\n"
+### boolean equals(Game other)
+Checks the title, salePrice, steamRatingPercent, and steamAppID against the other game and returns false if one of these are different, returns true otherwise.
