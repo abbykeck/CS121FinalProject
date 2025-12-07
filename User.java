@@ -21,8 +21,6 @@ public class User implements Serializable {
 			System.out.println("Balance: " + a.getBalanceString());
 			*/
 			a.start();
-		} else {
-			System.out.println("Login failed, please try again");
 		} // end if
 	} // end main
 	public User() {
@@ -72,8 +70,13 @@ public class User implements Serializable {
 		if (userName.equals(inputName)) {
 			if (PIN.equals(inputPIN)) {
 				result = true;
-			} // end if
-		} // end if
+				System.out.println("Login successful");
+			} else {
+				System.out.println("Login failed. Please try again");
+			}// end if
+		} else {
+			System.out.println("Login failed. Please try again");
+		}// end if
 		return result;
 	} // end login
 	public boolean login(String userName, String PIN) {
@@ -81,8 +84,13 @@ public class User implements Serializable {
 		if (this.userName.equals(userName)) {
                         if (this.PIN.equals(PIN)) {
                                 result = true;
-                        } // end if
-                } // end if
+				System.out.println("Login successful");
+                        } else {
+				System.out.println("Login failed. Please try again");
+			} // end if
+                } else {
+			System.out.println("Login failed. Please try again");
+		} // end if
                 return result;
 	} // end two-parameter login
 	public void start() {
