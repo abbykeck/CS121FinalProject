@@ -1,8 +1,8 @@
 testUser: User.class
-	java User
+	java -cp gson-2.8.9.jar:. User
 
 User.class: User.java GameLL.class
-	javac User.java
+	javac -cp gson-2.8.9.jar:. User.java
 
 testGameLL: GameLL.class
 	java -cp gson-2.8.9.jar:. GameLL

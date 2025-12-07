@@ -1,6 +1,9 @@
 import java.util.*;
 import java.io.*;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class User implements Serializable {
 	String userName;
 	String PIN;
@@ -12,9 +15,12 @@ public class User implements Serializable {
 		System.out.println("Hello world!");
 		User a = new User();
 		if (a.login()) {
+			/*
 			System.out.println("Username: " + a.getUserName());
 			System.out.println("PIN: " + a.getPIN());
 			System.out.println("Balance: " + a.getBalanceString());
+			*/
+			a.start();
 		} else {
 			System.out.println("Login failed, please try again");
 		} // end if
@@ -79,7 +85,35 @@ public class User implements Serializable {
                 } // end if
                 return result;
 	} // end two-parameter login
-	public void start() {} // end start
+	public void start() {
+		boolean keepGoing = true;
+		String choice = "";
+		while (keepGoing) {
+			choice = this.menu();
+			System.out.println();
+			if (choice.equals("0")) {
+				keepGoing = false;
+			} else if (choice.equals("1")) {
+				//System.out.println("checking balance...");
+				this.checkBalance();
+			} else if (choice.equals("2")) {
+				this.addBalance();
+				//System.out.println("adding balance...");
+			} else if (choice.equals("3")) {
+				//System.out.println("viewing games...");
+				this.ownedGames.printGames();
+			} else if (choice.equals("4")) {
+				//System.out.println("searching games...");
+				this.searchGames();
+			} else if (choice.equals("5")) {
+				//System.out.println("buying a game...");
+				this.buyGame();
+			} else {
+				System.out.println("Invalid input, please try again");
+			} // end if
+			System.out.println();
+		} // end while
+	} // end start
 	public String menu() {
 		Scanner input = new Scanner(System.in);
 		String choice = "";
@@ -94,11 +128,65 @@ public class User implements Serializable {
 		choice = input.nextLine();
 		return choice;
 	} // end menu
-	/*
-	public void checkBalance() {} // end checkBalance
-	public void addBalance() {} // end addBalance
-	private double getDouble() {} // end getDouble
-	public void searchGames() {} // end searchGames
-	public void buyGame() {} // end buyGame
-	*/
+	public void checkBalance() {
+		System.out.println("Balance: " + this.getBalanceString());
+	} // end checkBalance
+	public void addBalance() {
+		System.out.print("Enter how much to add: ");
+		this.balance += this.getDouble();
+		System.out.println("New balance: " + this.getBalanceString());
+	} // end addBalance
+	private double getDouble() {
+		Scanner input = new Scanner(System.in);
+		String userInput = "";
+		double result = 0.0;
+		userInput = input.nextLine();
+		try {
+			result = Double.parseDouble(userInput);
+		} catch (Exception e) {
+			System.out.println("Invalid input, please try again");
+		} // end try
+		return result;
+	} // end getDouble
+	public void searchGames() {
+		Scanner input = new Scanner(System.in);
+		String choice = "";
+		System.out.println("Game search menu\n");
+		System.out.println("0) Cancel search");
+		System.out.println("1) Search by title");
+		System.out.println("2) Search by minimum rating");
+		System.out.println("3) Search by price");
+		System.out.println("4) Search for a game by Game ID");
+		System.out.print("Enter your choice 0-4: ");
+		choice = input.nextLine();
+		if (choice.equals("0")) {
+			// do nothing
+		} else if (choice.equals("1")) {
+			GameLL.searchByTitle();
+		} else if (choice.equals("2")) {
+			GameLL.searchByRatings();
+		} else if (choice.equals("3")) {
+			GameLL.searchByPrice();
+		} else if (choice.equals("4")) {
+			Game g = GameLL.searchForGame();
+		} else {
+			System.out.println("Invalid input, please try again");
+		} // end if
+		System.out.println();
+	} // end searchGames
+	public void buyGame() {
+		Scanner input = new Scanner(System.in);
+		String choice = "";
+		System.out.println("Buy a game");
+		Game g = GameLL.searchForGame();
+		System.out.print("Do you want to buy this game? (yes/no): ");
+		choice = input.nextLine();
+		choice = choice.toLowerCase();
+		if (choice.equals("yes")) {
+			balance -= g.getPrice();
+			ownedGames.add(g);
+			System.out.println("Game bought successfully!");
+			System.out.println("New balance: " + this.getBalanceString());
+		} // end if
+	} // end buyGame
 } // end User
