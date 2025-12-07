@@ -71,34 +71,25 @@ public class GameLL implements Serializable {
 			currentNode = currentNode.getNext();
 		} // end while
 	} // end printGames
-	/*
-        public String readStringFromURL(String query){
+        public static String readStringFromURL(String query){
                 // From https://github.com/twopiharris/BSU-CS121/tree/main/data_API
                 // adapted from https://alvinalexander.com/blog/post/java/how-open-read-url-java-url-class-example-code/
-                // start with a blank String we will build up line by line
                 String result = "";
-                // networking is dangerous... An IOException handler is necessary
                 try {
-                        // create a url object based on the query
                         URL url = new URL(query);
-                        // create readers to simplify input
                         InputStreamReader iReader = new InputStreamReader(url.openStream());
                         BufferedReader reader = new BufferedReader(iReader);
-                        // step through input one line at a time
                         String line;
                         while ((line = reader.readLine()) != null){
                                 result += line + "\n";
                         } // end while
-                        // close the readers
                         reader.close();
                         iReader.close();
                 } catch (IOException e){
-                        // warn on exception
-                        System.out.println("something went wrong");
+                        System.out.println(e.getMessage());
                 } // end try
                 return result;
-        } // end readString
-        */
+        } // end readStringFromURL
         public static GameList parseJSON(String jsonString){
                 // Adapted from https://github.com/twopiharris/BSU-CS121/tree/main/data_API
                 GameList result;
@@ -115,21 +106,25 @@ public class GameLL implements Serializable {
 		System.out.print("Enter a game title (not case sensitive): ");
 		userInput = input.nextLine();
 		String json = "";
+		String url = "https://www.cheapshark.com/api/1.0/deals?storeID=1&pageSize=10&title=" + userInput;
                 System.out.println("Search results:\n");
                 try {
-                        File file = new File("title.txt");
+                        /*
+			File file = new File("title.txt");
                         Scanner inputFile = new Scanner(file);
                         while (inputFile.hasNext()) {
                                 json += inputFile.nextLine();
                         }
                         inputFile.close();
-                } catch (IOException e) {
+			*/
+			json = GameLL.readStringFromURL(url);
+                        games = parseJSON(json);
+                        for (Game game : games.getGames()) {
+                                game.printGame();
+                        } // end for
+                } catch (Exception e) {
                         System.out.println(e.getMessage());
-                }
-                games = parseJSON(json);
-                for (Game game : games.getGames()) {
-                        game.printGame();
-                }
+                } //end try
 	} // end searchByTitle
         public static void searchByRatings() {
 		GameList games = new GameList();
@@ -138,21 +133,25 @@ public class GameLL implements Serializable {
                 System.out.print("Enter a minimum rating (integer between 0-100): ");
                 userInput = input.nextLine();
 		String json = "";
+		String url = "https://www.cheapshark.com/api/1.0/deals?storeID=1&pageSize=10&steamRating=" + userInput;
                 System.out.println("Search results:\n");
 		try {
-                        File file = new File("ratings.txt");
+                       	/*
+		       	File file = new File("ratings.txt");
                         Scanner inputFile = new Scanner(file);
                         while (inputFile.hasNext()) {
                                 json += inputFile.nextLine();
                         }
                         inputFile.close();
-                } catch (IOException e) {
+			*/
+			json = GameLL.readStringFromURL(url);
+			games = parseJSON(json);
+                	for (Game game : games.getGames()) {
+                        	game.printGame();
+                	} // end for
+                } catch (Exception e) {
                         System.out.println(e.getMessage());
-                }
-                games = parseJSON(json);
-                for (Game game : games.getGames()) {
-                        game.printGame();
-                }
+                } // end try
 	} // end searchByRatings
         public static void searchByPrice() {
 		GameList games = new GameList();
@@ -164,21 +163,17 @@ public class GameLL implements Serializable {
 		System.out.print("Enter a maximum price: ");
 		maxPrice = input.nextLine();
 		String json = "";
+		String url = "https://www.cheapshark.com/api/1.0/deals?storeID=1&pageSize=10&lowerPrice=" + minPrice + "&upperPrice=" + maxPrice;
                 System.out.println("Search results:\n");
 		try {
-			File file = new File("priceRange.txt");
-                        Scanner inputFile = new Scanner(file);
-                        while (inputFile.hasNext()) {
-                                json += inputFile.nextLine();
-                        }
-                        inputFile.close();
-                } catch (IOException e) {
+			json = GameLL.readStringFromURL(url);
+                        games = parseJSON(json);
+                        for (Game game : games.getGames()) {
+                                game.printGame();
+                        } // end for
+                } catch (Exception e) {
                         System.out.println(e.getMessage());
-                }
-		games = parseJSON(json);
-		for (Game game : games.getGames()) {
-			game.printGame();
-		}
+                } // end try
 	} // end searchByPrice
         public static Game searchForGame() {
 		Game result = new Game();
@@ -188,22 +183,26 @@ public class GameLL implements Serializable {
 		System.out.print("Enter the game ID: ");
 		userInput = input.nextLine();
 		String json = "";
+		String url = "https://www.cheapshark.com/api/1.0/deals?storeID=1&pageSize=10&steamAppID=" + userInput;
                 System.out.println("Search result:\n");
                 try {
-                        File file = new File("game.txt");
+                        /*
+			File file = new File("game.txt");
                         Scanner inputFile = new Scanner(file);
                         while (inputFile.hasNext()) {
                                 json += inputFile.nextLine();
                         }
                         inputFile.close();
-                } catch (IOException e) {
+			*/
+			json = GameLL.readStringFromURL(url);
+                        games = parseJSON(json);
+                        for (Game game : games.getGames()) {
+				result = game;
+                        } // end for
+			result.printGame();
+                } catch (Exception e) {
                         System.out.println(e.getMessage());
-                }
-                games = parseJSON(json);
-                for (Game game : games.getGames()) {
-                        game.printGame();
-			result = game;
-                }
+                } // end try
 		return result;
 	} // end searchForGame
 } // end GameLL
@@ -237,7 +236,7 @@ class GameList implements Serializable {
 	private ArrayList<Game> itemList;
 	public ArrayList<Game> getGames() {
 		return itemList;
-	}
+	} // end getGames
 } // end GameList
 class Game implements Serializable {
         private String internalName;

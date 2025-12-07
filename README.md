@@ -1,5 +1,8 @@
 # GameStore project
-Uses CheapShark API to simulate a game store simular to Steam
+Uses the CheapShark API to simulate a game store simular to Steam
+## Sample login
+Username: "username"\
+PIN: "0000"
 # UML Diagram
 ```mermaid
 classDiagram
