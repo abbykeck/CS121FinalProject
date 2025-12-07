@@ -18,6 +18,10 @@ run: GameStore.class
 
 clean:
 	rm *.class
+	rm user.dat
+
+reset:
+	rm user.dat
 
 debug: GameStore.class
 	jdb -cp gson-2.8.9.jar:. GameStore
