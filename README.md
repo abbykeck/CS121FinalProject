@@ -69,6 +69,7 @@ class GameLL ["GameLL (handles I/O from API)"]{
     + void add(Game game)
     + void remove(Game game)
     + void printGames()
+    + static String readStringFromURL()
     + static void parseJSON(String json)
     + static void searchByTitle()
     + static void searchByRatings()
@@ -232,6 +233,19 @@ Adds a new GameNode containing a Game to the beginning of the list
     1. currentNode.getGame().printGame();
     1. currentNode = currentNode.getNext();
 1. end while
+### static String readStringFromURL(String query)
+From https://github.com/twopiharris/BSU-CS121/tree/main/data\_API
+1. turn query into a URL object
+1. create input streams
+1. read a String from the URL object and assign it to result
+1. return result;
+### static GameList parseJSON(String jsonString)
+From https://github.com/twopiharris/BSU-CS121/tree/main/data\_API
+1. create a GameList variable to store result
+1. change jsonString to a valid JSON format
+1. create Gson and GsonBuilder objects
+1. parse jsonString and put it into result in the format of GameList
+1. return result;
 ### static void searchByTitle()
 1. ArrayList<Game> games = new ArrayList<Game>();
 1. Scanner input = new Scanner(System.in);
