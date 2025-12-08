@@ -69,7 +69,7 @@ class GameLL ["GameLL (handles I/O from API)"]{
     + void add(Game game)
     + void remove(Game game)
     + void printGames()
-    + static String readStringFromURL()
+    + static String readStringFromURL(String query)
     + static void parseJSON(String json)
     + static void searchByTitle()
     + static void searchByRatings()
